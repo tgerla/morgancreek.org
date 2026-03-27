@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ .Title }} | {{ .Site.Title }}</title>
+  <style>
+    :root {
+      --bg: #182b1a;
+      --bg-soft: #203824;
+      --panel: #233d23;
+      --panel-border: #3d623d;
+      --text: #f4f1e8;
+      --muted: #d6dccf;
+      --link: #cfe8ff;
+      --visited: #f6e58d;
+      --accent: #8fbc8f;
+      --card-bg: #2a472d;
+      --card-border: #486f4d;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      background:
+        radial-gradient(900px 500px at 95% -10%, #436949 0%, transparent 70%),
+        linear-gradient(165deg, var(--bg-soft) 0%, var(--bg) 55%);
+      color: var(--text);
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .sidebar {
+      width: min(320px, 90vw);
+      background: var(--panel);
+      border-right: 1px solid var(--panel-border);
+      padding: 2rem 1.25rem;
+    }
+
+    .sidebar h2 {
+      font-size: 1.15rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+    }
+
+    .sidebar h2 a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .sidebar h2 a:hover,
+    .sidebar h2 a:focus-visible {
+      text-decoration: underline;
+      outline: none;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .sidebar ul a {
+      display: block;
+      text-decoration: none;
+      color: var(--text);
+      border: 1px solid transparent;
+      border-radius: 6px;
+      padding: 0.55rem 0.75rem;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .sidebar ul a:hover,
+    .sidebar ul a:focus-visible,
+    .sidebar ul a.active {
+      background-color: #2d4f2d;
+      border-color: var(--panel-border);
+      outline: none;
+    }
+
+    .content {
+      flex: 1;
+      padding: 2.5rem clamp(1rem, 3vw, 2.5rem) 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .hero {
+      margin-bottom: 1.4rem;
+      padding: 1.15rem 1.1rem;
+      border: 1px solid #4f7b55;
+      background: linear-gradient(160deg, rgba(75, 116, 81, 0.42), rgba(39, 67, 44, 0.5));
+      border-radius: 12px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      font-size: clamp(1.9rem, 3.8vw, 2.9rem);
+      line-height: 1.2;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.6rem;
+    }
+
+    .intro {
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.6;
+    }
+
+    .section {
+      margin-top: 1.5rem;
+    }
+
+    .section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.9rem;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+      border-bottom: 1px solid #486f4d;
+      padding-bottom: 0.4rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
+    }
+
+    .card-image {
+      aspect-ratio: 4 / 3;
+      width: 100%;
+      object-fit: contain;
+      display: block;
+      background: #355739;
+      padding: 0.4rem;
+    }
+
+    .image-missing {
+      aspect-ratio: 4 / 3;
+      display: grid;
+      place-items: center;
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(85, 125, 91, 0.65),
+        rgba(85, 125, 91, 0.65) 10px,
+        rgba(65, 96, 70, 0.65) 10px,
+        rgba(65, 96, 70, 0.65) 20px
+      );
+      color: #e5efe1;
+      font-size: 0.92rem;
+      text-align: center;
+      padding: 0.6rem;
+    }
+
+    .card-body {
+      padding: 0.8rem 0.8rem 1rem;
+    }
+
+    .name {
+      font-size: 1.05rem;
+      margin-bottom: 0.3rem;
+      line-height: 1.35;
+    }
+
+    .scientific {
+      color: var(--muted);
+      font-style: italic;
+      font-size: 0.95rem;
+      line-height: 1.35;
+    }
+
+    .source-note {
+      margin-top: 1.4rem;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 1rem;
+      padding: 0.95rem 1rem;
+      border-radius: 10px;
+      border: 1px solid #456a4a;
+      background: rgba(31, 54, 35, 0.6);
+    }
+
+    .source-note a {
+      color: var(--link);
+    }
+
+    .source-note a:visited {
+      color: var(--visited);
+    }
+
+    @media (max-width: 900px) {
+      body {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--panel-border);
+      }
+
+      .content {
+        padding-top: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar" aria-label="Site navigation">
+    <h2><a href="/">Home</a></h2>
+    <ul>
+      <li><a class='{{ if eq .RelPermalink "/area-map/" }}active{{ end }}' href="/area-map/">Area Map</a></li>
+      <li><a class='{{ if eq .RelPermalink "/history-of-mcv/" }}active{{ end }}' href="/history-of-mcv/">History of MCV</a></li>
+      <li><a class='{{ if eq .RelPermalink "/rare-plants-and-animals/" }}active{{ end }}' href="/rare-plants-and-animals/">Rare Plants and Animals</a></li>
+      <li><a class='{{ if eq .RelPermalink "/how-can-i-help/" }}active{{ end }}' href="/how-can-i-help/">How Can I Help?</a></li>
+      <li><a class='{{ if eq .RelPermalink "/related-links/" }}active{{ end }}' href="/related-links/">Related Links</a></li>
+    </ul>
+  </aside>
+
+  <main class="content">
+    <section class="hero">
+      <h1>{{ .Title }}</h1>
+      <p class="intro">A selection of notable plant and animal species documented in the Morgan Creek Valley.</p>
+    </section>
+
+    <section class="section" aria-label="Plants">
+      <h2>Plants</h2>
+      <div class="grid">
+        {{ range .Params.plants }}
+        <article class="card">
+          {{ if .image }}
+          <img class="card-image" src="{{ .image }}" alt="{{ .name }}" loading="lazy" />
+          {{ else }}
+          <div class="image-missing">Image coming soon</div>
+          {{ end }}
+          <div class="card-body">
+            <h3 class="name">{{ .name }}</h3>
+            <p class="scientific">{{ .scientific }}</p>
+          </div>
+        </article>
+        {{ end }}
+      </div>
+    </section>
+
+    <section class="section" aria-label="Animals">
+      <h2>Animals</h2>
+      <div class="grid">
+        {{ range .Params.animals }}
+        <article class="card">
+          {{ if .image }}
+          <img class="card-image" src="{{ .image }}" alt="{{ .name }}" loading="lazy" />
+          {{ else }}
+          <div class="image-missing">No picture</div>
+          {{ end }}
+          <div class="card-body">
+            <h3 class="name">{{ .name }}</h3>
+            <p class="scientific">{{ .scientific }}</p>
+          </div>
+        </article>
+        {{ end }}
+      </div>
+    </section>
+
+    <p class="source-note">For a more complete list of rare species, please refer to <em>Inventory of the Natural Areas and Wildlife Habitats of Orange County, North Carolina</em> (Sather and Hall, 1988).</p>
+  </main>
+</body>
+</html>

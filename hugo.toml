@@ -3,3 +3,8 @@ languageCode = "en-us"
 title = "Morgan Creek Valley Alliance"
 
 disableKinds = ["taxonomy", "term"]
+
+[markup]
+	[markup.goldmark]
+		[markup.goldmark.renderer]
+			unsafe = true
