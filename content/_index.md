@@ -4,7 +4,7 @@ title: "Morgan Creek Valley Alliance"
 
 # Morgan Creek Valley Alliance
 
-This site is under construction. Please visit our [Facebook page](https://www.facebook.com/morgancreekvalleyalliance) for the latest news.
+We are under construction. Please visit our [Facebook page](https://www.facebook.com/morgancreekvalleyalliance) for the latest news.
 
 > "Preserving this quiet fairyland valley as a sanctuary in our midst will be a lovely achievement. It is part of our natural and historical legacy" - Margaret Brown, Orange County Commissioner
 
